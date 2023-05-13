@@ -8,10 +8,17 @@ const router = Router()
 
 
 router.get('/',(req,res)=>{
-    const {numUsers = 1} = req.query
-    const user = generateUsers(numUsers)
-    
-    res.json({message: user})
+    try {
+        const {numUsers = 1} = req.query
+        const user = generateUsers(numUsers)
+        if(Object.entries(req.query).length === 0) 
+        req.logger.warning('the request no have querys')
+        
+        console.log(req)
+        res.json({message: user})
+    } catch (error) {
+        console.error(error)
+    }
 
 })
 
